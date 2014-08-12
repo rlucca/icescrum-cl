@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function usage()
+{
+	:
+}
+
+while getopts ":" command
+do
+	case "${command}" in
+		\?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [ -f ${HOME}/.icescrum_cli ]
+then
+	. ${HOME}/.icescrum_cli
+else
+	if [ -z ${ICESCRUM_URL} ] || [ -z ${ICESCRUM_USER} ]	\
+		|| [ -z ${ICESCRUM_PASSWD} ]						\
+		|| [ -z ${ICESCRUM_PROJECT_ID} ]					\
+		|| [ -z ${ICESCRUM_PROJECT_NAME} ]
+	then
+		echo "File '.icescrum_cli' not found on home (${HOME})"
+		exit 1
+	fi
+fi

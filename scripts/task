@@ -1,0 +1,37 @@
+#!/bin/bash
+
+function usage()
+{
+	echo -e "task"
+	echo -e "\t-l\tList all tasks"
+	echo -e "\t-s <ID>\tShow the relevant data"
+	echo -e "\t-S <ID>\tShow the relevant data in one line"
+}
+
+icescrum setup
+
+while getopts ":ls:S:" command
+do
+	case "${command}" in
+		l)
+			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/list" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-list.py $*
+			;;
+		S)
+			TASK_ID=$1
+			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/${TASK_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-show-oneline.py
+			shift
+			OPTIND=1
+			;;
+		s)
+			TASK_ID=$1
+			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/${TASK_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-show.py
+			shift
+			OPTIND=1
+			;;
+		\?)
+			usage
+			;;
+	esac
+done
+
+

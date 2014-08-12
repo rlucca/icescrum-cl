@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# ICESCRUM_CLI_HOME where the icescrum main script and ./scripts stays
+# This variable can go inside a file in ~/.icescrum_cli
+	# ICESCRUM_URL
+	# ICESCRUM_USER
+	# ICESCRUM_PASSWD
+	# ICESCRUM_PROJECT_ID
+	# ICESCRUM_PROJECT_NAME
+
+
+if [ -z $ICESCRUM_CLI_HOME ]
+then
+	export ICESCRUM_CLI_HOME=`dirname \`which icescrum\``
+fi
+
+function usage()
+{
+	echo "IceScrum - Command Line Interpreter"
+
+	for filename in `ls ${ICESCRUM_CLI_HOME}/scripts/*`
+	do
+		$filename --help
+	done
+}
+
+while getopts ":" command
+do
+	case "${command}" in
+		\?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [ $# -ge 1 ]
+then
+	COMMAND=$1
+	shift
+	if [ -f ${ICESCRUM_CLI_HOME}/scripts/${COMMAND} ]
+	then
+		${ICESCRUM_CLI_HOME}/scripts/${COMMAND} $*
+	else
+		echo "Unknow command: ${COMMAND}"
+		echo
+		usage
+	fi
+else
+	usage
+fi
+
