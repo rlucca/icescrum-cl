@@ -6,6 +6,7 @@ function usage()
 	echo -e "\t-l\tList all tasks"
 	echo -e "\t-s <ID>\tShow the relevant data"
 	echo -e "\t-S <ID>\tShow the relevant data in one line"
+  exit 0
 }
 
 icescrum setup

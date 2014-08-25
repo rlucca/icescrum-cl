@@ -5,6 +5,7 @@ function usage()
 	echo -e "story"
 	echo -e "\t-l\tList the stories"
 	echo -e "\t-s <ID>\tShow the relevant data"
+  exit 0
 }
 
 icescrum setup
