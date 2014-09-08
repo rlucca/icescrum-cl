@@ -8,8 +8,6 @@ function usage()
   exit 0
 }
 
-icescrum setup
-
 while getopts ":ls:" command
 do
 	case "${command}" in

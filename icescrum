@@ -40,6 +40,7 @@ then
 	shift
 	if [ -f ${ICESCRUM_CLI_HOME}/scripts/${COMMAND} ]
 	then
+    [ ${COMMAND} != "setup" ] && . ${ICESCRUM_CLI_HOME}/scripts/setup ""
 		${ICESCRUM_CLI_HOME}/scripts/${COMMAND} $*
 	else
 		echo "Unknow command: ${COMMAND}"

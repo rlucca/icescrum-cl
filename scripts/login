@@ -3,6 +3,7 @@
 function usage()
 {
 	echo -e "login\tIt is used to login in the IceScrum account and create the cookies"
+  exit 0
 }
 
 while getopts ":" command
@@ -10,10 +11,8 @@ do
 	case "${command}" in
 		\?)
 			usage
-			exit
 			;;
 	esac
 done
 
-icescrum setup
 curl -c /tmp/cookie.jar ${ICESCRUM_URL}/j_spring_security_check -d "j_username=${ICESCRUM_USER}&j_password=${ICESCRUM_PASSWD}" -X POST
