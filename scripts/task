@@ -21,13 +21,13 @@ else
         curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/list" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-list.py $*
         ;;
       S)
-        TASK_ID=$1
+        TASK_ID=${OPTARG}
         curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/${TASK_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-show-oneline.py
         shift
         OPTIND=1
         ;;
       s)
-        TASK_ID=$1
+        TASK_ID=${OPTARG}
         curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/${TASK_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/tasks-show.py
         shift
         OPTIND=1

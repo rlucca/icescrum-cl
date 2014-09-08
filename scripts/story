@@ -15,7 +15,7 @@ do
 			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/story/list" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/stories-list.py $*
 			;;
 		s)
-			STORYID=${OPTARG}
+			STORY_ID=${OPTARG}
 			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/story/${STORY_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/stories-show.py
 			;;
 		\?)

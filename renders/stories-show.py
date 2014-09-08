@@ -36,5 +36,5 @@ if ntasks > 0:
   tasklist = [str(task['id']) for task in data['tasks']]
   print "Tasks (%d):" % ntasks
   for task in tasklist:
-    system("SHOW=\"icescrum-tasks-show2.py\" icescrum-task-show.sh %s" % task)
+    system("icescrum task -S %s" % task)
 
