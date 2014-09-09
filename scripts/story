@@ -8,6 +8,8 @@ function usage()
   exit 0
 }
 
+icescrum login
+
 while getopts ":ls:" command
 do
 	case "${command}" in

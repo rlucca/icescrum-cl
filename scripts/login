@@ -2,7 +2,6 @@
 
 function usage()
 {
-	echo -e "login\tIt is used to login in the IceScrum account and create the cookies"
   exit 0
 }
 
@@ -15,4 +14,9 @@ do
 	esac
 done
 
-curl -c /tmp/cookie.jar ${ICESCRUM_URL}/j_spring_security_check -d "j_username=${ICESCRUM_USER}&j_password=${ICESCRUM_PASSWD}" -X POST
+LOGGED=`find /tmp/cookie.jar -mmin -45 2>/dev/null | wc -l`
+
+if [ $LOGGED -ne 1 ]
+then
+  curl -c /tmp/cookie.jar ${ICESCRUM_URL}/j_spring_security_check -d "j_username=${ICESCRUM_USER}&j_password=${ICESCRUM_PASSWD}" -X POST
+fi
