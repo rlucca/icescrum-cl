@@ -1,16 +1,17 @@
-#!/bin/bash
+#!/bin/bash -x
 
 function usage()
 {
 	echo -e "story"
 	echo -e "\t-l\tList the stories"
 	echo -e "\t-s <ID>\tShow the relevant data"
+	echo -e "\t-b <BID>\tList the stories of the backlog <BID>"
   exit 0
 }
 
 icescrum login
 
-while getopts ":ls:" command
+while getopts ":ls:b:" command
 do
 	case "${command}" in
 		l)
@@ -20,6 +21,10 @@ do
 			STORY_ID=${OPTARG}
 			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/story/${STORY_ID}" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/stories-show.py
 			;;
+    b)
+			curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/story/list" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --get -H "Content-Type: application/json" | ${ICESCRUM_CLI_HOME}/renders/stories-list-filterby-backlogid.py $*
+      ;;
+
 		\?)
 			usage
 			;;
