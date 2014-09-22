@@ -14,7 +14,11 @@ icescrum login
 
 if [ "$1" == "new" ]
 then
-  curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/save" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --data "task.parentStory.id=$2&task.sprint.id=$3&task.estimation=$4&task.name=$5"
+  SID=$2
+  BID=$3
+  HRS=$4
+  shift 4
+  curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/save" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --data "task.parentStory.id=$SID&task.sprint.id=$BID&task.estimation=$HRS&task.name=$*"
 else
   while getopts ":ls:S:" command
   do

@@ -21,12 +21,13 @@ story_state = { 1: "Suggested",
 
 def existsData(value, defValue):
   if value is None:
-    return "-"
+    return defValue
   return value
 
 print "ID: %d" % data['id']
 print "Name: %s" % data['name']
 print "State: %s" % story_state[data['state']]
+print "Backlog: %s" % existsData(data['parentSprint'], {"id":"-"})['id']
 print "PlannedDate: %s" % existsData(data['plannedDate'], "-")
 print "DoneDate: %s" % existsData(data['doneDate'], "-")
 print "Description: %s" % existsData(data['description'], "-")
