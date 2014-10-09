@@ -7,12 +7,24 @@ function usage()
 	echo -e "\t-s <ID>\tShow the relevant data"
 	echo -e "\t-S <ID>\tShow the relevant data in one line"
   echo -e "\tnew <STORYID> <BACKLOGID> <HOURS> <TITLE>"
+  echo -e "\tworking <ID>"
+  echo -e "\tchangeTime <ID> <HRS>"
   exit 0
 }
 
 icescrum login
 
-if [ "$1" == "new" ]
+if [ "$1" == "working" ]
+then
+  TID=$2
+  HRS=$3
+  curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/task/state" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --data "product=${ICESCRUM_PROJECT_ID}&id=${TID}&task.state=1"
+elif [ "$1" == "changeTime" ]
+then
+  TID=$2
+  HRS=$3
+  curl -s -b /tmp/cookie.jar -c /tmp/cookie.jar "${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_ID}/task/update/$TID" -H "Referer: ${ICESCRUM_URL}/p/${ICESCRUM_PROJECT_NAME}" -H "X-Requested-With: XMLHttpRequest" --data "task.estimation=$HRS"
+elif [ "$1" == "new" ]
 then
   SID=$2
   BID=$3
